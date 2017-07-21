@@ -1,2 +1,19 @@
-<preference name="Fullscreen" value="true" />
-<preference name="Orientation" value="landscape" />  
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.phonegap.example"
+    versionCode = "1"
+    version     = "1.0.0" >
+
+  <name>PhoneGap Example</name>
+  <description>
+      An example to develop android applications on Adobephonegab.
+  </description>
+  <author href="https://build.phonegap.com" email="support@phonegap.com">
+      wildabeast
+  </author>
+
+  <preference name="orientation" value="landscape" />
+  <preference name="fullscreen" value="true" />
+
+</widget> 
