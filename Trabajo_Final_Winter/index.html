@@ -1,0 +1,42 @@
+<html>
+<head>
+		<meta charset="utf-8" />
+		<title>Naves</title>
+
+		<style>
+		  body {
+		  	background-color: white;
+		    padding: 0px;
+		    margin: 0px;
+		  }</style>
+	</head>
+<body>
+	<title>Winter Project</title>
+	<script type="text/javascript" src='phaser.js'></script>
+	<script type="text/javascript" src='Scripts/Boost.js'></script>
+	<script type="text/javascript" src="Scripts/Preloader.js"></script>
+	<script type="text/javascript" src="Scripts/Game.js"></script>
+	<script type="text/javascript" src="Scripts/Lifebar.js"></script>
+	<script type="text/javascript" src="Scripts/Shooter.js"></script>
+	<script type="text/javascript" src="Scripts/Player.js"></script>
+	<script type="text/javascript" src="Scripts/Laser.js"></script>
+
+
+<script type="text/javascript">
+	window.onload = function(){
+		var game = new Phaser.Game(800,500,Phaser.AUTO);
+		var Global = {};
+		game.state.add('Boost',Boost);
+		game.state.add('Preloader',Preloader);
+		//game.state.add('Menu',Menu);
+		game.state.add('Game',Game);
+		game.state.add('Shooter',Shooter);
+		//game.state.add('Instrucciones',Instrucciones);
+		//game.state.add('Creditos',Creditos);
+		
+		game.state.start('Boost');
+	}
+</script>
+
+</body>
+</html>
