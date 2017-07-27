@@ -21,6 +21,8 @@ Player=function(game){
 	this.weaponA2.trackSprite(this, 0, -14);
 
 	this.weaponB= new Laser(game);
+
+	this.scale.setTo(2,2);
 	game.add.existing(this);
 }
 
@@ -40,7 +42,6 @@ Player.prototype.Shoot=function(){
 	}
 	
 	if(this.weaponType==2){
-		console.log("di")
 		this.weaponB.fire(this);
 	}
 }

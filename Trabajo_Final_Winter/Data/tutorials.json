@@ -1,0 +1,20 @@
+{
+	"nTutorial":
+	[
+		{
+			"x":150,
+			"y":150,
+			"width":320,
+			"height":160,
+			"handX":-20,
+			"handY":-175,
+			"text":"Necesitamos materiales para reparar la nave. Vamos a explorar el planeta",
+			"next":1,
+			"completed":false
+		},
+		{
+			"text":"Mensaje de prueba 2",
+			"next":-1
+		}
+	]
+}

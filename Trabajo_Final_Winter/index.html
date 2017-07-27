@@ -5,7 +5,7 @@
 
 		<style>
 		  body {
-		  	background-color: white;
+		  	background-color: black;
 		    padding: 0px;
 		    margin: 0px;
 		  }</style>
@@ -20,11 +20,13 @@
 	<script type="text/javascript" src="Scripts/Shooter.js"></script>
 	<script type="text/javascript" src="Scripts/Player.js"></script>
 	<script type="text/javascript" src="Scripts/Laser.js"></script>
-
+	<script type="text/javascript" src="Scripts/Enemy.js"></script>
+	<script type="text/javascript" src="Scripts/TextBox.js"></script>
+	<script type="text/javascript" src="Scripts/Tutorial.js"></script>
 
 <script type="text/javascript">
 	window.onload = function(){
-		var game = new Phaser.Game(800,500,Phaser.AUTO);
+		var game = new Phaser.Game('100','100',Phaser.AUTO);
 		var Global = {};
 		game.state.add('Boost',Boost);
 		game.state.add('Preloader',Preloader);
