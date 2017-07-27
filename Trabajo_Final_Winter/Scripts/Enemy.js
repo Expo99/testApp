@@ -31,7 +31,9 @@ EnemyFather.prototype.Call=function(pX,pY){
 	this.outOfBoundsKill=false;
 	this.exists=true;
 	this.visible=true;
-	this.reset(pX,pY);
+	this.x=pX;
+	this.y=pY;
+	//this.reset(pX,pY);
 }
 
 EnemyFather.prototype.offScreen=function(){//aqui piuedo verificar cuando las naves no son destruidas y salen de la pantalla
@@ -80,11 +82,6 @@ Enemy.normalEnemy1.prototype.Shoot=function(){
 		this.weapon.fire(this);
 	}
 }
-
-
-
-
-
 
 
 
