@@ -3,10 +3,10 @@ EnemyFather=function(game,player,key){
 	this.game=game;
 	this.player=player;
 	this.anchor.setTo(0.5,0.5);
-	this.checkWorldBounds=true;
-	this.outOfBoundsKill=true;
+	//this.checkWorldBounds=true;
+	//this.outOfBoundsKill=true;
 	this.game.physics.arcade.enable(this);
-	this.exists=false;
+	//this.exists=false;
 	this.life=100;
 	this.stop_moving=false;
 	this.stop_fire=-1;// si es -1 es false, si es 1 es true;
