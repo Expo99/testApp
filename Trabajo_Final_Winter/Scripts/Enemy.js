@@ -29,6 +29,8 @@ EnemyFather.prototype.constructor = EnemyFather;
 
 EnemyFather.prototype.Call=function(pX,pY){
 	this.outOfBoundsKill=false;
+	this.exists=true;
+	this.visible=true;
 	this.reset(pX,pY);
 }
 
