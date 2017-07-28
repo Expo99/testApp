@@ -36,6 +36,7 @@ Shooter.prototype={
 		}
 		this.jsonRead();
 
+		this.enemyprueba=new EnemyPrueba(this,this.player);
 		//this.weaponButton3=this.add.button(350,450,'button_placeholder',this.changeTriple,this);;
 	},
 
@@ -69,6 +70,9 @@ Shooter.prototype={
 		{
 			this.timePassed++;
 			this.player.Update();
+				console.log(this.enemyprueba.x);
+			console.log(this.enemyprueba.y);
+			this.enemyprueba.Update();
 			//console.log(this.timePassed);
 			if(this.zone>=1 && this.zone<=5){
 				//console.log(this.levelData.enemies[this.currentEnemy].time);
