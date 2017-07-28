@@ -1,5 +1,5 @@
 EnemyPrueba=function(game,player){
-	Phaser.Sprite.call(this,game,1000,400,'player');
+	Phaser.Sprite.call(this,game,1000,400,'enemigo1');
 	this.game=game;
 	this.player=player;
 	this.anchor.setTo(0.5,0.5);
@@ -97,7 +97,6 @@ EnemyFather.prototype.offScreen=function(){//aqui piuedo verificar cuando las na
 }
 */
 
-
 var Enemyn1=function(game,player,key){
  	EnemyFather.call(this,game,player,key);
 
@@ -130,15 +129,13 @@ Enemyn1.prototype.Shoot=function(){
 }
 
 
-
-
 var Enemy={};
 
 Enemy.normalEnemy1=function(game,player,key){
 
 	EnemyFather.call(this,game,player,key);
 
-	this.weapon= game.add.weapon(50,'bala_jugador');
+	this.weapon= game.add.weapon(50,'enemy_bullet');
 	this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
 	this.weapon.bulletSpeed = 300;
 	this.weapon.fireRate=1;

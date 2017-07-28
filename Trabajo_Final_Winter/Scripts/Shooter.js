@@ -31,7 +31,7 @@ Shooter.prototype={
 		this.enemies= this.add.group();
 
 		for(var i=0;i<10;i++){
-			var enemy= new Enemyn1(this,this.player,'enemigo1');
+			var enemy= new Enemy.normalEnemy1(this,this.player,'enemigo1');
 			this.enemies.add(enemy);
 		}
 		this.jsonRead();
@@ -70,8 +70,6 @@ Shooter.prototype={
 		{
 			this.timePassed++;
 			this.player.Update();
-				console.log(this.enemyprueba.x);
-			console.log(this.enemyprueba.y);
 			this.enemyprueba.Update();
 			//console.log(this.timePassed);
 			if(this.zone>=1 && this.zone<=5){
