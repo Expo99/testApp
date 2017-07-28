@@ -1,11 +1,12 @@
 EnemyFather=function(game,player,key){
-	Phaser.Sprite.call(this,game,-999,-999,key);
+	Phaser.Sprite.call(this,game,-999,-999,'enemigo1');
 	this.game=game;
 	this.player=player;
 	this.anchor.setTo(0.5,0.5);
 	//this.checkWorldBounds=true;
 	//this.outOfBoundsKill=true;
 	this.game.physics.arcade.enable(this);
+	this.enableBody=true;
 	//this.exists=false;
 	this.life=100;
 	this.stop_moving=false;
@@ -47,6 +48,40 @@ EnemyFather.prototype.offScreen=function(){//aqui piuedo verificar cuando las na
 	this.weapon.fireAtSprite(this.player);
 }
 */
+
+
+var Enemyn1=function(game,player,key){
+ 	EnemyFather.call(this,game,player,key);
+
+	this.weapon= game.add.weapon(50,'enemy_bullet');
+	this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+	this.weapon.bulletSpeed = 300;
+	this.weapon.fireRate=1;
+	this.weapon.fireAngle= 180;
+	this.weapon.trackSprite(this, 0, 0);
+	this.scale.set(4,3);
+}
+
+Enemyn1.prototype= Object.create(EnemyFather.prototype);
+Enemyn1.prototype.constructor= Enemyn1;
+
+Enemyn1.prototype.Update=function(){
+	console.log(this.x);
+	this.body.velocity.x = -100;
+	this.Shoot();
+	this.offScreen();
+}
+
+Enemyn1.prototype.Shoot=function(){
+	this.time_interFiring--;
+
+	if(this.time_interFiring<=0){
+		this.time_interFiring= Math.floor((Math.random() * 250) + 100);
+		this.weapon.fire(this);
+	}
+}
+
+
 
 
 var Enemy={};
