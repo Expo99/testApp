@@ -21,7 +21,7 @@ EnemyFather=function(game,player,key){
 	this.weapon.fireRate = 300;
 	this.weapon.trackSprite(this, 0, 0);*/
 
-	game.add.existing(this);
+	//game.add.existing(this);
 }
 
 EnemyFather.prototype=Object.create(Phaser.Sprite.prototype);
