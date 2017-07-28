@@ -1,5 +1,5 @@
 EnemyPrueba=function(game,player){
-	Phaser.Sprite.call(this,game,1000,400,'enemigo1');
+	Phaser.Sprite.call(this,game,1000,400,'player');
 	this.game=game;
 	this.player=player;
 	this.anchor.setTo(0.5,0.5);
