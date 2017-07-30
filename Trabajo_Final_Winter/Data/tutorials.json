@@ -22,6 +22,61 @@
 			"handY":-9990,
 			"special":1,
 			"next":-1
+		},
+		{
+			"x":410,
+			"y":210,
+			"width":300,
+			"height":150,
+			"handX":460,
+			"handY":-40,
+			"text":"Puedes revisar los objetos que has conseguido en tus viajes haciendo click en el boton del inventario",
+			"next":3,
+			"completed":false
+		},
+		{
+			"x":410,
+			"y":210,
+			"width":300,
+			"height":150,
+			"handX":460,
+			"handY":100,
+			"text":"En el taller podras mejorar los status y skills de tu nave utilizando los materiales recolectados en tus aventuras",
+			"next":4,
+			"completed":false
+		},
+		{
+			"x":410,
+			"y":210,
+			"width":300,
+			"height":120,
+			"handX":460,
+			"handY":195,
+			"text":"Utiliza el boton del mapa para volver a recorrer alguna zona previa o viajar a otro planeta",
+			"next":5,
+			"completed":false
+		},
+		{
+			"x":410,
+			"y":210,
+			"width":300,
+			"height":110,
+			"handX":-240,
+			"handY":-230,
+			"text":"En la tienda puedes comprar fabolosas skins para tu nave o nave nodriza",
+			"next":6,
+			"completed":false
+		},
+		{
+			"x":410,
+			"y":210,
+			"width":330,
+			"height":150,
+			"handX":-520,
+			"handY":-210,
+			"text":"Si has sufrido algun daño en tus aventuras puedes ver un AD para acelerar el proceso de reparo",
+			"next":-1,
+			"completed":false
 		}
 	]
 }

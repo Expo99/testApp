@@ -17,10 +17,8 @@ var Tutorial =function(game){
 
 Tutorial.prototype = {
 
-	createTutorials:function(){
-
-	},
 	openTutorial:function(type){
+		this.type=type;
 		this.actualTutorial=this.tutorialsData.nTutorial[type];
 		console.log(this.actualTutorial);
 		this.boxContainer.CreateBox(this.actualTutorial.x,this.actualTutorial.y,this.actualTutorial.width,
@@ -31,20 +29,17 @@ Tutorial.prototype = {
 			case 1: 
 		}*/
 	},
-
-	specialTutorials:function(type){
+	//los coloco separados porque son errores que suceden en tiempos distintos
+	nextTutorial:function(){
+		if(this.type!=-1)
+			this.type=this.tutorialsData.nTutorial[this.type].next;
 		
-		/*switch(type){
-			case 1:/*ar twe=this.game.add.tween(this.hand);
-				   twe.to({x:500,y:450},500);
-				   twe.onComplete.add(function(){
-
-				   },this);
-
-		}*/
-		
-
-	},
+		if(this.type!=-1)
+			this.openTutorial(this.type);
+		else{
+			this.closeTutorial();
+		}
+	},	
 
 	closeTutorial:function(type){
 		this.boxContainer.Remove();

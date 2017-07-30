@@ -60,7 +60,7 @@ Enemy.normalEnemy1=function(game,player,key){
 
 	EnemyFather.call(this,game,player,key);
 	this.health=10;
-	this.weapon= game.add.weapon(50,'enemy_bullet');
+	this.weapon= game.add.weapon(5,'enemy_bullet');
 	this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
 	this.weapon.bulletSpeed = 300;
 	this.weapon.fireRate=1;

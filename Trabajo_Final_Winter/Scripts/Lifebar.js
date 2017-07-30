@@ -1,8 +1,8 @@
-Lifebar=function(game){
+Lifebar=function(game,life){
 	Phaser.Group.call(this,game);
 	this.game=game;
 	this.maxBlocks=4;
-	this.blocksAvailable=this.maxBlocks;
+	this.blocksAvailable=life;
 	for(var i=0;i<this.maxBlocks;i++){
 		var lifeblock= game.add.sprite(50+(i*32),20,'lifebar_block');
 		lifeblock.anchor.setTo(0.5,0.5);

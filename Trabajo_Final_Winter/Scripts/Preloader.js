@@ -22,11 +22,12 @@ Preloader.prototype = {
 		this.load.image('material3','Assets/material3.png');
 		this.load.image('coin','Assets/dinero.png');
 		this.load.image('star','Assets/star.png');
+		this.load.image('AD','Assets/AD.png');
 
 		this.load.json('level1','Data/level1.json');
 		this.load.json('tutorials','Data/tutorials.json');
 	},
 	create:function(){
-		this.state.start('Game');
+		this.state.start('Game',true,false,1);
 	}
 }

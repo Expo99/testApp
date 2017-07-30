@@ -21,7 +21,7 @@ TextBox.prototype.CreateBox=function(pX,pY,pwidth,pheight,pText){
 	this.height=pheight;
 	this.texto.text= pText;
 	this.texto.x=this.x+10;
-	this.texto.y=this.y+20;
+	this.texto.y=this.y+10;
 }
 
 TextBox.prototype.Remove=function(){
@@ -40,7 +40,7 @@ var Inventoryline=function(game,pmaterial){
 	this.text=game.add.text(-999,-999,'',this.fontStyle);
 	this.coin=game.add.sprite(-999,-999,'coin');
 	this.sellButton=game.add.button(-999,-999,'button_placeholder',this.sell,this);
-
+	this.game=game;
 	this.coin.scale.setTo(1.8,1.8);
 	this.sellButton.scale.setTo(2.5,1.2);
 }
@@ -67,12 +67,23 @@ Inventoryline.prototype={
 		this.material.priceText.y=this.coin.y;
 
 		this.material.amountText.text='x'+this.material.amount;
-		this.material.priceText.text='x'+this.material.price
+		this.material.priceText.text='x'+this.material.price;
 		
 	},
 	sell:function(){
 		if(this.material.amount>0){
 			this.material.amount--;
+
+			switch(this.material.name){
+				case 'cobre': localStorage.setItem('Cobre',this.material.amount);break;
+				case 'cristal': localStorage.setItem('Cristal',this.material.amount);break;
+				case 'caucho': localStorage.setItem('Caucho',this.material.amount);break;
+			}
+			
+			this.game.moneyAmount+=this.material.price;
+			console.log(this.game.moneyAmount);
+			localStorage.setItem('Money',this.game.moneyAmount);
+			this.game.moneyText.text=('x'+this.game.moneyAmount);
 			this.accommodate(this.material.x,this.material.y);
 		}
 	},
@@ -181,9 +192,12 @@ Skinline.prototype={
 
 var Cashline=function(game,starAmount,cash){
 	this.fontStyle = {font:'20px Arial',fill:'#FFCC00',stroke: "#333", strokeThickness: 5, wordWrap: true, wordWrapWidth: 700 };
-	this.starAmount=game.add.text(-999,-999,'x'+starAmount,this.fontStyle);
+	this.starAmount=starAmount;
+	this.starAmountText=game.add.text(-999,-999,'x'+starAmount,this.fontStyle);
 	this.star= game.add.sprite(-999,-999,'star');
-	this.cash=game.add.text(-999,-999,'$'+cash+'.99',this.fontStyle);
+	this.game=game;
+	this.cash=cash;
+	this.cashText=game.add.text(-999,-999,'$'+cash+'.99',this.fontStyle);
 	this.BuyButton= game.add.button(-999,-999,'button_placeholder',this.buy,this);
 	this.BuyButton.scale.setTo(2.5,1.2);
 }
@@ -193,21 +207,24 @@ Cashline.prototype={
 	accommodate:function(pX,pY){
 		this.star.x=pX;
 		this.star.y=pY;
-		this.starAmount.x=this.star.x+60;
-		this.starAmount.y=pY;
-		this.cash.x=pX+300;
-		this.cash.y=pY;
+		this.starAmountText.x=this.star.x+60;
+		this.starAmountText.y=pY;
+		this.cashText.x=pX+300;
+		this.cashText.y=pY;
 		this.BuyButton.x=pX+420;
 		this.BuyButton.y=pY;
 	},
 
 	buy:function(){
+		this.game.starAmount+=this.starAmount;
+		this.game.starText.text=('x'+this.game.starAmount);
+		localStorage.setItem('Cash',this.game.starAmount);
 		console.log("Gracias por comprar cash!!!");
 	},
 	close:function(){
-		this.starAmount.x=-999999;
+		this.starAmountText.x=-999999;
 		this.star.x=-99999;
-		this.cash.x=-99999;
+		this.cashText.x=-99999;
 		this.BuyButton.x=-99999;
 	}
 };
@@ -313,7 +330,7 @@ CollectedBox.prototype.Update=function(){
 };
 
 CollectedBox.prototype.closeBox=function(){
-	this.game.state.start('Game');
+	this.game.state.start('Game',true,false,2);
 };
 
 
@@ -335,6 +352,10 @@ InventoryBox.prototype.closeBox=function(){
 	for(var i=0;i<this.texts.length;i++){
 		this.texts[i].close();
 	}
+	if(this.game.tutorialOn && this.game.tutorial.type==2){
+		this.game.tutorial.nextTutorial();
+	}
+	this.game.windowOpen=false;
 }
 
 
@@ -377,6 +398,10 @@ WorkShopBox.prototype.closeBox=function(){
 	}
 	this.tab1.x=-999999;
 	this.tab2.x=-999999;
+	if(this.game.tutorialOn && this.game.tutorial.type==3){
+		this.game.tutorial.nextTutorial();
+	}
+	this.game.windowOpen=false;
 }
 
 var ShopBox=function(game,pwidth,pheight){
@@ -416,6 +441,10 @@ ShopBox.prototype.closeBox=function(){
 	}
 	this.tab1.x=-999999;
 	this.tab2.x=-999999;
+	if(this.game.tutorialOn && this.game.tutorial.type==5){
+		this.game.tutorial.nextTutorial();
+	}
+	this.game.windowOpen=false;
 };
 
 var MapBox=function(game,pwidth,pheight){
@@ -455,6 +484,10 @@ MapBox.prototype.closeBox=function(){
 	}
 	this.tab1.x=-999999;
 	this.tab2.x=-999999;
+	if(this.game.tutorialOn && this.game.tutorial.type==4){
+		this.game.tutorial.nextTutorial();
+	}
+	this.game.windowOpen=false;
 };
 		//this.upgradeImage.x=pX;
 		//this.upgradeImage.y=pY;

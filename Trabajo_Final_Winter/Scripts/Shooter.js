@@ -1,7 +1,9 @@
-Shooter= function(game){};
+Shooter= function(game,lifebar){
+	
+};
 Shooter.prototype={
 
-	init:function(){
+	init:function(lifebar){
 		this.nextFire = 0;
 		this.life=3;
 		this.bckScroll=50;
@@ -11,6 +13,8 @@ Shooter.prototype={
 		this.timePassed=0;
 		this.levelData=null;
 		this.zone=1;
+		this.life=lifebar;
+		//this.lifeBar=new Lifebar(this,lifebar);
 	},
 	create:function(){
 
@@ -34,12 +38,13 @@ Shooter.prototype={
 		this.tutorial= new Tutorial(this);
 
 		this.report=new CollectedBox(this,550,300);
-
+		console.log(this.lifeBar);
 
 		for(var i=0;i<50;i++){
 			var enemy= new Enemy.normalEnemy1(this,this.player,'enemigo1');
 			this.enemies.add(enemy);
 		}
+		this.lifebar= new Lifebar(this,this.lifebar);
 		this.jsonRead();
 		this.tutorial.openTutorial(1);
 		//this.weaponButton3=this.add.button(350,450,'button_placeholder',this.changeTriple,this);;
@@ -92,7 +97,7 @@ Shooter.prototype={
 		}
 	},
 	back:function(){
-		this.state.start('Game');
+		this.state.start('Game',true,false,1);
 	},
 	updateEnemy:function(enemy){
 		enemy.Update();
@@ -109,6 +114,7 @@ Shooter.prototype={
 	update:function(){
 		if(!this.done)
 		{
+			
 			this.timePassed++;
 			this.player.Update();
 			//console.log(this.timePassed);
@@ -148,6 +154,32 @@ Shooter.prototype={
 				this.report.WriteReport('cobre',mat1);
 				this.report.WriteReport('cristal',mat2);
 				this.report.WriteReport('caucho',mat3);
+
+
+				var newCobre= parseInt(localStorage.getItem('Cobre'))+mat1;
+				var newCristal= parseInt(localStorage.getItem('Cristal'))+mat2;
+				var newCaucho= parseInt(localStorage.getItem('Caucho'))+mat3;
+
+				/*console.log(newCobre);
+				console.log(newCristal);
+				console.log(newCaucho);*/
+				//console.log('El valor anterior del cobre fue: '+parseInt(localStorage.getItem('Cobre')));
+				localStorage.setItem('Cobre',newCobre);
+				//console.log('A cobre se le agregara el valor de: '+mat1);
+				//console.log('El nuevo valor del cobre es: '+parseInt(localStorage.getItem('Cobre')));
+
+
+				//console.log('El valor anterior del cristal fue: '+parseInt(localStorage.getItem('Cristal')));
+				localStorage.setItem('Cristal',newCristal);
+				//console.log('A cristal se le agregara el valor de: '+mat2);
+				//console.log('El nuevo valor del cristal es: '+parseInt(localStorage.getItem('Cristal')));
+
+
+				//console.log('El valor anterior del caucho fue: '+parseInt(localStorage.getItem('Caucho')));
+				localStorage.setItem('Caucho',newCaucho);
+				//console.log('A caucho se le agregara el valor de: '+mat3);
+				//console.log('El nuevo valor del caucho es: '+parseInt(localStorage.getItem('Caucho')));
+
 				this.report.MoveReport(this.world.width/2-250,this.world.height/2-200);
 			}
 			this.report.Update();

@@ -8,15 +8,15 @@ Player=function(game){
 	
 	this.weaponA1= game.add.weapon(50,'bala_jugador');
 	this.weaponA1.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-	this.weaponA1.bulletSpeed = 200;
+	this.weaponA1.bulletSpeed = 300;
 	this.weaponA1.fireRate = 450;
 	this.weaponA1.fireAngle= 0;
 	this.weaponA1.trackSprite(this, 0, 14);
 
 	this.weaponA2= game.add.weapon(50,'bala_jugador');
 	this.weaponA2.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-	this.weaponA2.bulletSpeed = 250;
-	this.weaponA2.fireRate = 400;
+	this.weaponA2.bulletSpeed = 350;
+	this.weaponA2.fireRate = 450;
 	this.weaponA2.fireAngle= 0;
 	this.weaponA2.trackSprite(this, 0, -14);
 
