@@ -1,9 +1,9 @@
-Shooter= function(game,lifebar){
+Shooter= function(game){
 	
 };
 Shooter.prototype={
 
-	init:function(lifebar){
+	init:function(){
 		this.nextFire = 0;
 		this.life=3;
 		this.bckScroll=50;
@@ -13,8 +13,6 @@ Shooter.prototype={
 		this.timePassed=0;
 		this.levelData=null;
 		this.zone=1;
-		this.life=lifebar;
-		//this.lifeBar=new Lifebar(this,lifebar);
 	},
 	create:function(){
 
@@ -27,10 +25,10 @@ Shooter.prototype={
 
 		this.weaponButton1= this.add.button(this.world.width/2 -450,this.world.height-150,'button_placeholder',this.changeSingle,this);
 		this.weaponButton2= this.add.button(this.world.width/2 -100,this.world.height-150,'button_placeholder',this.changeLaser,this);
-		this.return= this.add.button(70,40,'button_placeholder',this.back,this);
+		//this.return= this.add.button(70,40,'button_placeholder',this.back,this);
 		this.weaponButton1.scale.setTo(4,2.9);
 		this.weaponButton2.scale.setTo(4,2.9);
-		this.return.scale.setTo(4,2.9);
+		//this.return.scale.setTo(4,2.9);
 
 		this.enemies= this.add.group();
 		this.materialsDropped=this.add.group();
@@ -38,15 +36,15 @@ Shooter.prototype={
 		this.tutorial= new Tutorial(this);
 
 		this.report=new CollectedBox(this,550,300);
-		console.log(this.lifeBar);
 
 		for(var i=0;i<50;i++){
 			var enemy= new Enemy.normalEnemy1(this,this.player,'enemigo1');
 			this.enemies.add(enemy);
 		}
-		this.lifebar= new Lifebar(this,this.lifebar);
+		this.lifebar= new Lifebar(this,parseInt(localStorage.getItem('Life')));
 		this.jsonRead();
-		this.tutorial.openTutorial(1);
+		if(localStorage.getItem('Start')=='true')
+			this.tutorial.openTutorial(1);
 		//this.weaponButton3=this.add.button(350,450,'button_placeholder',this.changeTriple,this);;
 	},
 
@@ -72,10 +70,34 @@ Shooter.prototype={
 		}
 	},
 
+	hit_player:function(player,bullet){
+		bullet.kill();
+		var loselife= parseInt(localStorage.getItem('Life'))-1;
+		this.lifebar.lostBlock();
+		localStorage.setItem('Life',loselife);
+		if(this.lifebar.blocksAvailable==0){
+			localStorage.setItem('Life','0');
+			this.state.start('Game',true,false,2);
+		}
+	},
+
 	hitenemy_Laser:function(enemy,laser){
 		laser.width=this.player.x+(enemy.x+enemy.width/2);
-		enemy.health-=0.01;
+		enemy.health-=0.1;
 		if(enemy.health<=0){
+			var nMaterial= Math.floor((Math.random() * 4) + 0);
+			
+			for(var i=0;i<=nMaterial;i++){
+				var typeMaterial= Math.floor((Math.random()*3)+0);
+				var material=null;
+				switch(typeMaterial){
+					case 0: material= new Material(this.game,'cobre',1,0,true,'material1');break;
+					case 1: material= new Material(this.game,'cristal',1,0,true,'material2');break;
+					case 2: material= new Material(this.game,'caucho',1,0,true,'material3');break;
+				}
+				material.Appear(enemy.x,enemy.y);
+				this.materialsDropped.add(material);
+			}
 			enemy.kill();
 		}
 	},
@@ -105,6 +127,8 @@ Shooter.prototype={
 		this.physics.arcade.overlap(enemy,this.player.weaponA1.bullets,this.hitenemy_Bullet,null,this);
 		this.physics.arcade.overlap(enemy,this.player.weaponA2.bullets,this.hitenemy_Bullet,null,this);
 		this.physics.arcade.overlap(enemy,this.player.weaponB,this.hitenemy_Laser,null,this);
+
+		this.physics.arcade.overlap(enemy.weapon.bullets,this.player,this.hit_player,null,this);
 	},
 	jsonRead:function(){
 		this.levelData= this.cache.getJSON('level'+this.zone);

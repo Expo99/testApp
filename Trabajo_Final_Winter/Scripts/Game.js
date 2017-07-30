@@ -9,7 +9,6 @@ Game.prototype={
 		this.background = this.add.tileSprite(0,0,this.world.width, this.world.height,'space');
 		this.fontStyle = {font:'20px Arial',fill:'#FFCC00',stroke: "#333", strokeThickness: 5};
 		this.Lifebar= new Lifebar(this,parseInt(localStorage.getItem('Life')));
-		
 		this.mothership = this.add.sprite(this.world.width/2,this.world.height/2+40,'mothership');
 		this.mothership.anchor.setTo(0.5,0.5);
 		this.mothership.scale.setTo(0.55,0.55)
@@ -59,8 +58,6 @@ Game.prototype={
 		this.tutorial= new Tutorial(this);
 		
 
-
-
 		this.fontStyle = {font:'20px Arial',fill:'#FFCC00',stroke: "#333", strokeThickness: 5, wordWrap: true, wordWrapWidth: 700 };
 		this.money=this.add.sprite(this.shop.x+500,this.shop.y,'coin');
 		this.moneyAmount=parseInt(localStorage.getItem('Money'));
@@ -85,12 +82,12 @@ Game.prototype={
 
 		this.closeButton=this.add.button(this.HUDBox.x+this.HUDBox.width-50,this.HUDBox.y-45,'close',this.closeHudWindow,this);
 		this.closeButton.scale.setTo(1.5,1.5);*/
-		if(this.type==1){
+		if(this.type==1 && localStorage.getItem('Start')=='true'){
 			this.tutorialOn=false;
 			this.openTutorial(0);
 		}
 
-		if(this.type==2){
+		if(this.type==2 && localStorage.getItem('Start')=='true'){
 			this.tutorialOn=true;
 			this.openTutorial(2);
 		}
@@ -126,7 +123,6 @@ Game.prototype={
 		this.MapBox.AddLine(1,'Escurridizos',2);
 		this.MapBox.AddLine(1,'Las profundidades',3);
 		this.windowOpen=false;//evita que se abran 2 ventanas a la vez
-
 		
 		this.ADImage= this.add.sprite(-99999,-99999,'AD');
 		this.ADImage.scale.setTo(2.6,3.25);
@@ -160,10 +156,16 @@ Game.prototype={
 		this.ADImage.x=-99999999;
 		this.ADImage.y=-9999999;
 		this.closeAD.x=-9999999;
+		var winlife= parseInt(localStorage.getItem('Life'))+1;
 		this.Lifebar.recover();
+		localStorage.setItem('Life',winlife);
+		if(parseInt(localStorage.getItem('Life'))>4){
+			localStorage.setItem('Life',4);
+		}
 		if(this.tutorialOn && this.tutorial.type==6){
 			this.tutorial.nextTutorial();
 			this.tutorialOn=false;
+			localStorage.setItem('Start','false');
 		}
 		
 	},
@@ -178,7 +180,10 @@ Game.prototype={
 		if(!this.windowOpen){
 			this.ShopBox.TabCall(this.world.width/2-250,this.world.height/2-200,this.ShopBox.tab1,this.ShopBox.tab2,this.ShopBox.texts1);
 			this.windowOpen=true;
-			this.Lifebar.lostBlock();
+			if(this.tutorialOn && this.tutorial.type==5){
+				this.Lifebar.lostBlock();
+			}
+			
 		}
 	},
 
@@ -204,8 +209,8 @@ Game.prototype={
 	},
 
 	StartExploring:function(){
-		if(!this.windowOpen){
-			this.state.start('Shooter',true,false,this.Lifebar);
+		if(!this.windowOpen && this.Lifebar.blocksAvailable>0){
+			this.state.start('Shooter');
 		}
 	}
 };

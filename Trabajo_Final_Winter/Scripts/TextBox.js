@@ -159,7 +159,7 @@ WorkShopline.prototype={
 var Skinline=function(game,name,amount,key){
 	this.fontStyle = {font:'20px Arial',fill:'#FFCC00',stroke: "#333", strokeThickness: 5, wordWrap: true, wordWrapWidth: 700 };
 	this.text=game.add.text(-999,-999,name,this.fontStyle);
-
+	this.game=game;
 	this.currency=game.add.sprite(-999,-999,key);
 	this.currency.scale.setTo(1.8,1.8);
 	this.textAmount= game.add.text(-999,-999,'x'+amount,key);
@@ -180,6 +180,13 @@ Skinline.prototype={
 		this.BuyButton.y=pY;
 	},
 	buy:function(){
+		var compra= this.game.add.text(500,70,'GRACIAS POR COMPRAR!!!! :)',this.fontStyle);
+		var tween= this.game.add.tween(compra);
+		tween.to({alpha:0},4000);
+		tween.onComplete.add(function(compra){
+			compra.destroy();
+		},this);
+		tween.start();
 		console.log("Gracias por comprar");
 	},
 	close:function(){
@@ -323,7 +330,7 @@ CollectedBox.prototype.WriteReport=function(materialName,amount){
 CollectedBox.prototype.Update=function(){
 	for(var i=0;i<this.texts.length;i++){
 		this.texts[i].x=this.x+15;
-		this.texts[i].y=this.y+(50*i);
+		this.texts[i].y=25+this.y+(50*i);
 	}
 	this.closeButton.x=this.x+this.width;
 	this.closeButton.y=this.y-45;

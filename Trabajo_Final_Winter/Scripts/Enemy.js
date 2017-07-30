@@ -88,8 +88,6 @@ Enemy.normalEnemy1.prototype.Shoot=function(){
 	}
 }
 
-
-
 Enemy.normalEnemy2=function(game,player,key){
 	EnemyFather.call(this,game,player,key);
 

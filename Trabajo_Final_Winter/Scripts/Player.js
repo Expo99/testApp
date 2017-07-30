@@ -22,7 +22,7 @@ Player=function(game){
 
 	this.weaponB= new Laser(game);
 
-	this.scale.setTo(1.8,1.8);
+	this.scale.setTo(2.5,1.5);
 	game.add.existing(this);
 }
 

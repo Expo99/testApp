@@ -7,6 +7,9 @@ Lifebar=function(game,life){
 		var lifeblock= game.add.sprite(50+(i*32),20,'lifebar_block');
 		lifeblock.anchor.setTo(0.5,0.5);
 		this.add(lifeblock);
+		if(i+1>this.blocksAvailable){
+			lifeblock.kill();
+		}
 	}
 }
 
