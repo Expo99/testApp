@@ -1,7 +1,7 @@
 Player=function(game){
 	Phaser.Sprite.call(this,game,100,100,'player');
 	this.game=game;
-	this.weaponType=2;
+	this.weaponType=1;
 	this.anchor.setTo(0.5,0.5);
 	this.game.physics.arcade.enable(this);
 	this.enableBody=true;
@@ -15,14 +15,14 @@ Player=function(game){
 
 	this.weaponA2= game.add.weapon(50,'bala_jugador');
 	this.weaponA2.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-	this.weaponA2.bulletSpeed = 200;
-	this.weaponA2.fireRate = 450;
+	this.weaponA2.bulletSpeed = 250;
+	this.weaponA2.fireRate = 400;
 	this.weaponA2.fireAngle= 0;
 	this.weaponA2.trackSprite(this, 0, -14);
 
 	this.weaponB= new Laser(game);
 
-	this.scale.setTo(2,2);
+	this.scale.setTo(1.8,1.8);
 	game.add.existing(this);
 }
 

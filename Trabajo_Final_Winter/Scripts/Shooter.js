@@ -29,17 +29,57 @@ Shooter.prototype={
 		this.return.scale.setTo(4,2.9);
 
 		this.enemies= this.add.group();
+		this.materialsDropped=this.add.group();
 
-		for(var i=0;i<10;i++){
+		this.tutorial= new Tutorial(this);
+
+		this.report=new CollectedBox(this,550,300);
+
+
+		for(var i=0;i<50;i++){
 			var enemy= new Enemy.normalEnemy1(this,this.player,'enemigo1');
 			this.enemies.add(enemy);
 		}
 		this.jsonRead();
-
-		this.enemyprueba=new EnemyPrueba(this,this.player);
+		this.tutorial.openTutorial(1);
 		//this.weaponButton3=this.add.button(350,450,'button_placeholder',this.changeTriple,this);;
 	},
 
+	hitenemy_Bullet:function(enemy,bullet){
+		bullet.kill();
+		enemy.health--;
+
+		if(enemy.health<=0){
+			var nMaterial= Math.floor((Math.random() * 4) + 0);
+			
+			for(var i=0;i<=nMaterial;i++){
+				var typeMaterial= Math.floor((Math.random()*3)+0);
+				var material=null;
+				switch(typeMaterial){
+					case 0: material= new Material(this.game,'cobre',1,0,true,'material1');break;
+					case 1: material= new Material(this.game,'cristal',1,0,true,'material2');break;
+					case 2: material= new Material(this.game,'caucho',1,0,true,'material3');break;
+				}
+				material.Appear(enemy.x,enemy.y);
+				this.materialsDropped.add(material);
+			}
+			enemy.kill();
+		}
+	},
+
+	hitenemy_Laser:function(enemy,laser){
+		laser.width=this.player.x+(enemy.x+enemy.width/2);
+		enemy.health-=0.01;
+		if(enemy.health<=0){
+			enemy.kill();
+		}
+	},
+
+	hitmaterial:function(material,player){
+		this.materialsCollected.push(material);
+		material.Destroy();
+
+	},
 	changeSingle:function(type){
 		this.player.weaponType=1;
 		this.player.weaponB.borrarlaser();
@@ -56,44 +96,61 @@ Shooter.prototype={
 	},
 	updateEnemy:function(enemy){
 		enemy.Update();
+
+		this.physics.arcade.overlap(enemy,this.player.weaponA1.bullets,this.hitenemy_Bullet,null,this);
+		this.physics.arcade.overlap(enemy,this.player.weaponA2.bullets,this.hitenemy_Bullet,null,this);
+		this.physics.arcade.overlap(enemy,this.player.weaponB,this.hitenemy_Laser,null,this);
 	},
 	jsonRead:function(){
 		this.levelData= this.cache.getJSON('level'+this.zone);
 		this.currentEnemy=0;
 		//El "x" : this.world.width+ x
-
-
 	},
-
 	update:function(){
 		if(!this.done)
 		{
 			this.timePassed++;
 			this.player.Update();
-			this.enemyprueba.Update();
 			//console.log(this.timePassed);
 			if(this.zone>=1 && this.zone<=5){
 				//console.log(this.levelData.enemies[this.currentEnemy].time);
-				if(this.currentEnemy<=this.levelData.enemies.length-1){
-					while(this.timePassed==this.levelData.enemies[this.currentEnemy].time){
+				if(this.currentEnemy<=this.levelData.enemies.length-1)
+				{
+					while(this.timePassed==this.levelData.enemies[this.currentEnemy].time)
+					{
 						var ED=this.levelData.enemies[this.currentEnemy];
 						var enemy=this.enemies.getFirstExists(false).Call(this.world.width+ED.x,ED.y);
 						this.currentEnemy++;
-						console.log("GO");
 						if(this.currentEnemy==this.levelData.enemies.length){//si se pasa a un dato no existente que salga del while
 							break;
 						}
 					}
-				}
-				
+				}		
 			}
-
-			/*if(this.timePassed==100){
-				console.log("mandar");
-				this.enemies.getFirstExists(false).Call(this.world.width+100,200);
-			}*/
+			this.materialsDropped.forEachExists(function(material){this.physics.arcade.overlap(material,this.player,this.hitmaterial,null,this)},this);
 			this.enemies.forEachExists(this.updateEnemy,this);
-			//this.enemies.forEachExists(this.updateEnemy,this);
+			if(this.timePassed==this.levelData.duration){
+				console.log(this.materialsCollected);
+				var mat1=0;
+				var mat2=0;
+				var mat3=0;
+				for(var i=0;i<this.materialsCollected.length;i++){
+					if(this.materialsCollected[i].name=='cobre'){
+						mat1++;
+					}
+					if(this.materialsCollected[i].name=='cristal'){
+						mat2++;
+					}
+					if(this.materialsCollected[i].name=='caucho'){
+						mat3++;
+					}
+				}
+				this.report.WriteReport('cobre',mat1);
+				this.report.WriteReport('cristal',mat2);
+				this.report.WriteReport('caucho',mat3);
+				this.report.MoveReport(this.world.width/2-250,this.world.height/2-200);
+			}
+			this.report.Update();
 		}
 	}
 };

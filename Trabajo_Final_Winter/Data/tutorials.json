@@ -13,7 +13,14 @@
 			"completed":false
 		},
 		{
-			"text":"Mensaje de prueba 2",
+			"x":750,
+			"y":440,
+			"text":"Arrastra tu dedo para moverte y disparar a los enemigos",
+			"width":300,
+			"height":120,
+			"handX":-9990,
+			"handY":-9990,
+			"special":1,
 			"next":-1
 		}
 	]

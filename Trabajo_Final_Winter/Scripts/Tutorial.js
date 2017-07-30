@@ -31,6 +31,21 @@ Tutorial.prototype = {
 			case 1: 
 		}*/
 	},
+
+	specialTutorials:function(type){
+		
+		/*switch(type){
+			case 1:/*ar twe=this.game.add.tween(this.hand);
+				   twe.to({x:500,y:450},500);
+				   twe.onComplete.add(function(){
+
+				   },this);
+
+		}*/
+		
+
+	},
+
 	closeTutorial:function(type){
 		this.boxContainer.Remove();
 		this.hand.x=-999;
