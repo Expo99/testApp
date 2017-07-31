@@ -6,8 +6,8 @@
 			"y":150,
 			"width":320,
 			"height":160,
-			"handX":-20,
-			"handY":-175,
+			"handX":45,
+			"handY":-145,
 			"text":"Necesitamos materiales para reparar la nave. Vamos a explorar el planeta",
 			"next":1,
 			"completed":false

@@ -25,8 +25,8 @@ Game.prototype={
 		this.map = this.add.button(this.mothership.x+410,this.mothership.y+100,'button_placeholder',this.openMap,this);
 		this.map.scale.set(4,2.9);
 
-		this.explore= this.add.button(this.mothership.x-75,this.mothership.y-250,'button_placeholder',this.StartExploring,this);
-		this.explore.scale.setTo(4,2.9);
+		this.explore= this.add.button(this.mothership.x-95,this.mothership.y-275,'button_placeholder',this.StartExploring,this);
+		this.explore.scale.setTo(5.5,3.5);
 
 		this.AD= this.add.button(this.Lifebar.x+50,this.Lifebar.y+50,'button_placeholder',this.watchAD,this);
 		this.AD.scale.setTo(2.5,1.1);
@@ -209,6 +209,8 @@ Game.prototype={
 	},
 
 	StartExploring:function(){
+		console.log(this.windowOpen);
+		console.log(this.Lifebar.blocksAvailable);
 		if(!this.windowOpen && this.Lifebar.blocksAvailable>0){
 			this.state.start('Shooter');
 		}
